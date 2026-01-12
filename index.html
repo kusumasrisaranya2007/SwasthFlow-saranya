@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SwasthFlow</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<div class="app-wrapper">
+
+  <div class="app-card">
+
+    <div class="content">
+
+      <div class="top">
+        <h2><span style="color:var(--primary-light)">Swasth</span>Flow</h2>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <select id="langSelect" onchange="changeLanguage()" style="width: auto; margin: 0;">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="te">తెలుగు</option>
+          </select>
+          <button class="secondary" onclick="toggleDarkMode()" id="darkModeBtn">🌙</button>
+          <select id="roleSelect">
+            <option value="patient">Patient</option>
+            <option value="hospital">Hospital</option>
+          </select>
+          <!-- ✅ RESET BUTTON -->
+          <button class="secondary" onclick="resetApp()" style="width:auto;">Reset</button>
+        </div>
+      </div>
+
+      <div id="main"></div>
+
+    </div>
+
+  </div>
+
+  <div class="assistant">
+    <h3>🤖 AI Assistant</h3>
+    <textarea id="issueInput" placeholder="Describe your problem..."></textarea>
+    <div style="display: flex; gap: 5px;">
+      <button id="micBtn" onclick="startListening()" style="background:#07434c; flex:1;">🎤 Speak</button>
+      <button onclick="checkHealth()" style="flex:1;">Check</button>
+    </div>
+    <div id="assistantResult"></div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+  function startListening() {
+    const micBtn = document.getElementById('micBtn');
+    const issueInput = document.getElementById('issueInput');
+    const langSelect = document.getElementById('langSelect');
+
+    // Check browser support for Speech API
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser. Try Chrome.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    
+    // Set language based on the dropdown selection
+    const langMap = { 'en': 'en-US', 'hi': 'hi-IN', 'te': 'te-IN' };
+    recognition.lang = langMap[langSelect.value] || 'en-US';
+
+    function playBeep(freq) {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.start();
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.5);
+      osc.stop(ctx.currentTime + 0.5);
+    }
+
+    recognition.onstart = function() {
+      micBtn.innerText = "👂 Listening...";
+      micBtn.classList.add('listening');
+      playBeep(800);
+    };
+
+    recognition.onend = function() {
+      micBtn.innerText = "🎤 Speak";
+      micBtn.classList.remove('listening');
+      playBeep(400);
+    };
+
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      issueInput.value = transcript;
+    };
+
+    recognition.start();
+  }
+</script>
+</body>
+</html>

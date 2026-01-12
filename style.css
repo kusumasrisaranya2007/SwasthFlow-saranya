@@ -1,0 +1,345 @@
+:root {
+  --primary: #07434c;
+  --primary-light: #25bac0;
+  --accent: #e67e22;
+  --bg-grad: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+  --card-bg: #ffffff;
+  --text-color: #2c3e50;
+  --text-light: #7f8c8d;
+  --shadow: 0 20px 60px rgba(7, 67, 76, 0.15);
+  --radius: 24px;
+  --border-color: #e0e0e0;
+  --error: #e74c3c;
+  --success: #2ecc71;
+}
+
+.dark-mode {
+  --bg-grad: #121212; --card-bg: #1e1e1e; --text-color: #e0e0e0; --text-light: #a0a0a0;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-grad);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* ===== Layout ===== */
+.app-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: center;
+}
+
+.app-card {
+  flex: 2;
+  min-width: 350px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Right Content ===== */
+.content {
+  padding: 0;
+}
+
+.top {
+  background: var(--primary);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top h2 {
+  margin: 0; font-weight: 600; letter-spacing: 0.5px; color: white;
+}
+
+.top select {
+  width: auto; margin: 0;
+}
+
+/* ===== Main Scroll Area ===== */
+#main {
+  padding: 0;
+}
+
+/* ===== Panels ===== */
+.panel {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  border: 1px solid #f0f0f0;
+}
+
+.panel h3 {
+  margin-top: 0;
+  color: var(--primary);
+}
+
+/* ===== Inputs ===== */
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  color: var(--text-color);
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.error-msg {
+  color: var(--error);
+  font-size: 0.75rem;
+  margin-bottom: 10px;
+  display: block;
+  min-height: 1.2em;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+}
+
+/* ===== Buttons ===== */
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+button:hover {
+  transform: translateY(-2px); box-shadow: 0 5px 15px rgba(7, 67, 76, 0.2);
+}
+
+button.secondary {
+  background: #ddd;
+  background-image: none;
+  color: #333;
+  box-shadow: none;
+}
+
+/* ===== Queue ===== */
+.queue-panel {
+  height: auto;
+}
+
+.queue-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.queue-item {
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.2s;
+}
+
+.queue-item:hover {
+  background: #f9fcff;
+}
+
+.token-badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  width: 45px; height: 45px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  margin-right: 15px;
+  box-shadow: 0 3px 8px rgba(37, 186, 192, 0.3);
+  color: white;
+}
+
+.patient-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-info small {
+  color: var(--text-light);
+  font-size: 0.8rem;
+}
+
+.btn-icon {
+  padding: 8px;
+  font-size: 1.2rem;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-light);
+}
+
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.badge-walkin { background: #e0f2f1; color: #00695c; }
+.badge-appt { background: #e3f2fd; color: #1565c0; }
+.badge-dept { background: #f3e5f5; color: #7b1fa2; }
+.badge-serving { background: #fff3e0; color: #e67e22; border: 1px solid #e67e22; }
+.badge-hold { background: #eceff1; color: #607d8b; }
+.badge-noshow { background: #ffebee; color: #c62828; text-decoration: line-through; }
+.badge-cancelled { background: #f5f5f5; color: #999; }
+
+/* ===== Analytics ===== */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.stat-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.stat-val {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 5px;
+}
+
+/* ===== Scrollbar ===== */
+.queue-list::-webkit-scrollbar {
+  width: 6px;
+}
+.queue-list::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+}
+
+/* ===== Assistant ===== */
+.assistant {
+  flex: 1;
+  min-width: 300px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 25px;
+  box-shadow: var(--shadow);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.assistant textarea {
+  height: 120px;
+}
+
+/* ===== Animations ===== */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+
+.listening {
+  background-color: #e74c3c !important;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== New UX Elements ===== */
+.current-patient-card {
+  background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+  border: 2px solid #ffca28;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 20px;
+  box-shadow: 0 4px 10px rgba(255, 202, 40, 0.2);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: #90a4ae;
+  background: #fcfcfc;
+  border-radius: 10px;
+  border: 2px dashed #eceff1;
+}
+
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  background: var(--white);
+  color: var(--text-color);
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  border-left: 5px solid var(--accent);
+  min-width: 250px;
+  animation: slideIn 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toast.error { border-left-color: var(--error); }
+.toast.success { border-left-color: var(--success); }
+
+.patient-alert {
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  border: 1px solid #bbdefb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
